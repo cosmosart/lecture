@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}
+ Tie Tok Game
+{% endblock %}
+{% block body %}
+{% if gamemessage == 0 %}
+<h2> Game Start</h2>
+{% elif gamemessage == 9 %}
+<h1> No winner </h1>
+{% elif gamemessage == 10 %}
+<h1>----------------------------------</h1>
+<h1><strong> {{ turn }} Win the game</strong></h1>
+<h1>----------------------------------</h1>
+{% else %}
+<h3> {{ gamemessage }} Turn</h3>
+{% endif %}
+<table>
+    {% for i in range(3) %}
+    <tr>
+        {% for j in range(3) %}
+        <td>
+            {% if game[i][j] %}
+                {{ game[i][j] }}
+            {% else %}
+                <a href="{{ url_for('play',row=i, col=j) }}">Play {{ turn }} here.</a>
+            {% endif %}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+        
+</table>
+<P></P>
+{% if gamemessage < 9 %}
+<h4><a href="{{ url_for('resetgame') }}">Reset the Game</a></h4>
+{% elif gamemessage > 8 %}
+<h1><a href="{{ url_for('resetgame') }}">Reset the Game</a></h1>
+{% endif %}
+{% endblock %}
